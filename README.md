@@ -28,6 +28,7 @@ step4
 ## change log
 ### 2021/7/12
 - reset! works now, may activate web by (-main)
+- update to Reitit Ring Set up 06:08
 
 ### 2021/7/11
 - make default rest api
