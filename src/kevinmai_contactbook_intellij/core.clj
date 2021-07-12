@@ -8,9 +8,10 @@
 
 (defn stop-server []
   (when-not (nil? @server)
-    ((@server :timeout 100)
-     (reset! server nil)
-     (println "Server stopped"))))
+    (@server :timeout 100)
+    (reset! server nil)
+    ;(println "Server stopped")
+    ))
 
 (def app
   (ring/ring-handler
@@ -23,9 +24,9 @@
   (println "Server started")
   (reset! server (run-server app {:port 4004})))
 
-(defn restart-server []
-  (stop-server)
-  (-main))
+;(defn restart-server []
+;  (stop-server)
+;  (-main))
 
 (comment
   (-main)
