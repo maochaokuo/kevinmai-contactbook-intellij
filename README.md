@@ -21,8 +21,14 @@ step3
 - in vscode, Ctrl-Alt-c Ctrl-Alt-j, choose deps.edn,
   then no option, will enter REPL, wait until Jack-in
   done
+  
+step4
+- change everything to IntelliJ Leiningen project
 
 ## change log
+### 2021/7/12
+- reset! works now, may activate web by (-main)
+
 ### 2021/7/11
 - make default rest api
 
