@@ -2,7 +2,12 @@
 
 (ns kevinmai-contactbook-intellij.core
   (:require [org.httpkit.server :refer [run-server]]
-            [reitit.ring :as ring]))
+            [reitit.ring :as ring]
+            [reitit.ring.middleware.exception :refer [exception-middleware]]
+            [reitit.ring.middleware.muuntaja :refer [format-negotiate-middleware
+                                                     format-request-middleware
+                                                     format-response-middleware]]
+            [muuntaja.core :as m]))
 
 (defonce server (atom nil))
 
@@ -11,7 +16,12 @@
     (ring/router
       [["/api" {:get (fn [req]
                        {:status 200
-                        :body   {:hello "world"}})}]])
+                        :body   {:hello "world"}})}]]
+      {:data {:muutaja    m/instance
+              :middleware [format-negotiate-middleware
+                           format-response-middleware
+                           exception-middleware
+                           format-request-middleware]}})
     (ring/routes
       (ring/redirect-trailing-slash-handler)
       (ring/create-default-handler
@@ -40,7 +50,7 @@
   @server
   (-main)
   (app {:request-method :get
-        :uri            "/api/"})
+        :uri            "/api"})
   )
 
 ;

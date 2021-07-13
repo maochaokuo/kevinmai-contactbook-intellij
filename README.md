@@ -43,6 +43,8 @@ add more routing, test:
 ## change log
 ### 2021/7/13
 - add more routing, but cannot compile, try find the source code
+- type a lot of code, to test
+
 ### 2021/7/12
 - reset! works now, may activate web by (-main)
 - update to Reitit Ring Set up 06:08
