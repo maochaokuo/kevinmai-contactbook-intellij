@@ -29,7 +29,11 @@
 ;  (-main))
 
 (comment
+  (stop-server)
+  @server
   (-main)
+  (app {:request-method :get
+        :uri "/api"})
   )
 ;
 ;(defn foo
