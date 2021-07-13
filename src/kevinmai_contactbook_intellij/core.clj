@@ -6,6 +6,23 @@
 
 (defonce server (atom nil))
 
+(def app
+  (ring/ring-handler
+    (ring/router
+      [["/api" {:get (fn [req]
+                       {:status 200
+                        :body   {:hello "world"}})}]])
+    (ring/routes
+      (ring/redirect-trailing-slash-handler)
+      (ring/create-default-handler
+        {:not-found (constantly {:status 404
+                                 :body   "Route not found"})})
+      )))
+
+(defn -main []
+  (println "Server started")
+  (reset! server (run-server app {:port 4004})))
+
 (defn stop-server []
   (when-not (nil? @server)
     (@server :timeout 100)
@@ -13,28 +30,19 @@
     ;(println "Server stopped")
     ))
 
-(def app
-  (ring/ring-handler
-    (ring/router
-      [["/api" {:get (fn [req]
-                       {:status 200
-                        :body   "ok"})}]])))
-
-(defn -main []
-  (println "Server started")
-  (reset! server (run-server app {:port 4004})))
-
-;(defn restart-server []
-;  (stop-server)
-;  (-main))
+(defn restart-server []
+  (stop-server)
+  (-main))
 
 (comment
+  (restart-server)
   (stop-server)
   @server
   (-main)
   (app {:request-method :get
-        :uri "/api"})
+        :uri            "/api/"})
   )
+
 ;
 ;(defn foo
 ;  "I don't do a whole lot."

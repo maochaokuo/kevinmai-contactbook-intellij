@@ -25,7 +25,24 @@ step3
 step4
 - change everything to IntelliJ Leiningen project
 
+step5
+- 可以在(comment)做http client test, ex: 
+```clojure
+(app {:request-method :get :uri "/api"})
+```
+=> {:status 200, :body {:hello "world"}}
+
+step6
+add more routing, test:
+```clojure
+(app {:request-method :get :uri "/api/"})
+```
+=> {:status 301, :headers {"Location" "/api"}, :body ""}
+
+
 ## change log
+### 2021/7/13
+- add more routing, but cannot compile, try find the source code
 ### 2021/7/12
 - reset! works now, may activate web by (-main)
 - update to Reitit Ring Set up 06:08
