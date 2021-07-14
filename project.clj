@@ -7,5 +7,7 @@
                  [org.clojure/clojure "1.10.1"]
                  [metosin/reitit "0.5.2"]
                  [http-kit "2.3.0"]
+                 [org.postgresql/postgresql "42.2.2"]
+                 [com.layerware/hugsql "0.5.1"]
                  ]
   :repl-options {:init-ns kevinmai-contactbook-intellij.core})

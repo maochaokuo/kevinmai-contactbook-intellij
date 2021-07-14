@@ -45,10 +45,24 @@ test
 ```
 => {:status 404, :body "Route not found"}
 
+## [2] HugSQL Configuration
+step1
+- update project.clj
+- add docker-compose.yml
+- add db.clj
+- add resources/contacts.sql
+
 ## change log
 
 ### 2021/7/14
 - done with tutorial [1] Reitit Ring Set Up
+
+start [2] HugSQL Configuration
+
+- error happened
+```clojure
+  (create-contacts-table config)
+```
 
 ### 2021/7/13
 - add more routing, but cannot compile, try find the source code

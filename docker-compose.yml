@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  db:
+    container_name: clj_contacts_db
+    image: postgres:9.6
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRE_USER: postgres
+      POSTGRE_PASSWORD: postgres
+      POSTGRE_DB: clj_contacts
