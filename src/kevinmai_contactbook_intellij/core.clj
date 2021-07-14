@@ -16,7 +16,7 @@
     (ring/router
       [["/api" {:get (fn [req]
                        {:status 200
-                        :body   {:hello "world"}})}]]
+                        :body   {:hello "world2"}})}]]
       {:data {:muutaja    m/instance
               :middleware [format-negotiate-middleware
                            format-response-middleware
@@ -50,7 +50,7 @@
   @server
   (-main)
   (app {:request-method :get
-        :uri            "/api"})
+        :uri            "/api2"})
   )
 
 ;

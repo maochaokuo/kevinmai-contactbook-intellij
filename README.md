@@ -2,7 +2,7 @@
 
 ## [1] Reitit Ring Set Up
 step 1
-```
+```clojure
 clj -A:run
 ```
 will show hello world
@@ -39,8 +39,17 @@ add more routing, test:
 ```
 => {:status 301, :headers {"Location" "/api"}, :body ""}
 
+test
+```clojure
+(app {:request-method :get :uri "/api2"})
+```
+=> {:status 404, :body "Route not found"}
 
 ## change log
+
+### 2021/7/14
+- done with tutorial [1] Reitit Ring Set Up
+
 ### 2021/7/13
 - add more routing, but cannot compile, try find the source code
 - type a lot of code, to test
