@@ -52,7 +52,15 @@ step1
 - add db.clj
 - add resources/contacts.sql
 
+step2
+- cannot continue with HugSQL, replaced by HoneySql
+- 初步建table與select query ok
+
 ## change log
+
+### 2021/7/28
+[2] HugSQL replaced by HoneySql
+初步建table與select query ok
 
 ### 2021/7/14
 - done with tutorial [1] Reitit Ring Set Up
