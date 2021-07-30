@@ -22,7 +22,6 @@
         created_at timestamp not null default current_timestamp
         )"]))
 
-
 (defn get-contacts []
   (jdbc/execute! ds (-> '{select (*) from contacts}
                         (sql/format))))
@@ -31,47 +30,63 @@
   (let [id (:path parameters)]
     (jdbc/execute! ds (-> '{select (*) from (contacts) where
                               (= f.id id)}
-                          (sql/format))))
+                          (sql/format)))))
 
-(defn create-contact [{:keys [parameters]}]
-  (let [first_name (:first_name parameters)
-        last_name (:last_name parameters)
-        email (:email parameters)]
-    (jdbc/execute! ds (-> (insert-into :contacts)
-                          (values [{:first_name first_name
-                                    :last_name last_name
-                                    :email email}])))
+(defn create-contact [first_name last_name email] ; [{:keys [parameters]}]
+  ;(let [first_name (:first_name parameters)
+  ;      last_name (:last_name parameters)
+  ;      email (:email parameters)]
+  (let [sql "null"]
+   (print first_name)
+   (print last_name)
+   (println email)
+   (println sql)
+   ;(jdbc/execute! ds [(-> (insert-into :contacts)
+   ;                       (values [{:first_name first_name
+   ;                                 :last_name last_name
+   ;                                 :email email}])
+   ;                       (sql/format {:pretty true}))])
+   (jdbc/execute! ds ["insert into contacts
+        (first_name, last_name, email)
+        values ( ?, ?, ?)
+   " first_name last_name email])
     (print "return key ")
-    (print :return-keys)
+    (print :return-keys))
   )
 
-(defn update-contact [{:keys [parameters]}]
-  (let [id (:id parameters)
-        first_name (:first_name parameters)
-        last_name (:last_name parameters)
-        email (:email parameters)]
-    (jdbc/execute! ds (-> (h/update :contacts)
-                          (set {:first_name first_name
+(defn update-contact [id first_name last_name email] ; [{:keys [parameters]}]
+  ;(let [id (:id parameters)
+  ;      first_name (:first_name parameters)
+  ;      last_name (:last_name parameters)
+  ;      email (:email parameters)]
+    (jdbc/execute! ds (-> (:update :contacts)
+                          (:set {:first_name first_name
                                 :last_name last_name
                                 :email email})
-                          (where [:= :id id])
+                          (:where [:= :id id])
                           (sql/format {:pretty true})))
     )
 
-(defn delete-contact [[:key [parameters]]]
-  (let [id (:id parameters)]
+(defn delete-contact [id] ; [{:key [parameters]}]
+  ;(let [id (:id parameters)]
     (jdbc/execute! ds (-> (delete-from :contacts)
                           (where [:= :id id])
-                          (sql/format)))))
+                          (sql/format))))
+
+;(defn aaa [p1 p2]
+;  (print p1)
+;  (print p2))
+;
+;(aaa "p1" "p2")
 
 (comment
   (create-contacts-table )
   (get-contacts)
+  (create-contact "Kevin" "Mai" "kevin.mai@email.com"
+    ;[{:first_name "Kevin" :last_name "Mai" :email "kevin.mai@email.com"}]
+    )
   (get-contact-by-id "baz")
   (jdbc/execute! ds ["select * from drugs"] {:timeout 5}) ; seconds
-
-
-
 
   ;(def config
   ;  {:classname "org.postgresql.Driver"

@@ -45,7 +45,7 @@ test
 ```
 => {:status 404, :body "Route not found"}
 
-## [2] HugSQL Configuration
+## [2] HugSQL Configuration (change to HoneySql)
 step1
 - update project.clj
 - add docker-compose.yml
@@ -55,8 +55,12 @@ step1
 step2
 - cannot continue with HugSQL, replaced by HoneySql
 - 初步建table與select query ok
+- insert ok
 
 ## change log
+
+### 2021/7/30
+- HoneySql insert ok
 
 ### 2021/7/28
 [2] HugSQL replaced by HoneySql
