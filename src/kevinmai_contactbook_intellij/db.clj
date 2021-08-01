@@ -26,46 +26,55 @@
   (jdbc/execute! ds (-> '{select (*) from contacts}
                         (sql/format))))
 
-(defn get-contact-by-id [{:keys [parameters]}]
-  (let [id (:path parameters)]
-    (jdbc/execute! ds (-> '{select (*) from (contacts) where
-                              (= f.id id)}
+(defn get-contact-by-id [id]
+  (let [sql "null"]
+    (jdbc/execute! ds (-> (select :*) (from :contacts)
+                          (where [:= :id id])
                           (sql/format)))))
 
-(defn create-contact [first_name last_name email] ; [{:keys [parameters]}]
-  ;(let [first_name (:first_name parameters)
-  ;      last_name (:last_name parameters)
-  ;      email (:email parameters)]
+(defn create-contact [first_name last_name email]
   (let [sql "null"]
-   (print first_name)
-   (print last_name)
-   (println email)
-   (println sql)
-   ;(jdbc/execute! ds [(-> (insert-into :contacts)
-   ;                       (values [{:first_name first_name
-   ;                                 :last_name last_name
-   ;                                 :email email}])
-   ;                       (sql/format {:pretty true}))])
+   (print first_name  last_name  email)
    (jdbc/execute! ds ["insert into contacts
         (first_name, last_name, email)
         values ( ?, ?, ?)
-   " first_name last_name email])
+   "   first_name last_name email ;{:return-keys true}
+                      ])
     (print "return key ")
     (print :return-keys))
   )
 
-(defn update-contact [id first_name last_name email] ; [{:keys [parameters]}]
-  ;(let [id (:id parameters)
-  ;      first_name (:first_name parameters)
-  ;      last_name (:last_name parameters)
-  ;      email (:email parameters)]
-    (jdbc/execute! ds (-> (:update :contacts)
-                          (:set {:first_name first_name
-                                :last_name last_name
-                                :email email})
-                          (:where [:= :id id])
-                          (sql/format {:pretty true})))
-    )
+(defn create-contact2 [fields] ; [{:keys [parameters]}]
+  (let [sql (str "insert into contacts
+        (first_name, last_name, email)
+        values (" fields ")")]
+    (println fields)
+    (println sql)
+    (jdbc/execute! ds [sql
+                       ;{:return-keys true}
+                       ])
+    (print "return key ")
+    (print :return-keys))
+  )
+(comment
+(-> (h/update :contacts)
+    (set {:first_name "first_name"
+          :last_name "last_name"
+          :email "email"})
+    (where [:= :id 1])
+    (sql/format {:pretty true}
+                ))
+)
+(defn update-contact [id first_name last_name email]
+  (let [sql (-> (h/update :contacts)
+                (set {:first_name first_name
+                       :last_name last_name
+                       :email email})
+                (where [:= :id id])
+                (sql/format {:pretty true}))]
+    (println sql)
+    (jdbc/execute! ds sql)
+    ))
 
 (defn delete-contact [id] ; [{:key [parameters]}]
   ;(let [id (:id parameters)]
@@ -82,12 +91,28 @@
 (comment
   (create-contacts-table )
   (get-contacts)
-  (create-contact "Kevin" "Mai" "kevin.mai@email.com"
+  (create-contact "Kevin2" "Mai2" "kevin2.mai@email.com"
     ;[{:first_name "Kevin" :last_name "Mai" :email "kevin.mai@email.com"}]
     )
-  (get-contact-by-id "baz")
-  (jdbc/execute! ds ["select * from drugs"] {:timeout 5}) ; seconds
+  (create-contact2 "'Kevin3', 'Mai3', 'kevin3.mai@email.com'" )
+  (get-contact-by-id 1)
+  (update-contact 2 "Kevin2b" "Mai2b" "kevin2b.mai@email.com")
+  ;(-> (:update :contacts)
+  ;    (:set {:first_name "first_name"
+  ;           :last_name "last_name"
+  ;           :email "email"})
+  ;    (:where [:= :id 1])
+  ;    (sql/format ;{:pretty true}
+  ;                ))
+  (-> (h/update :contacts)
+      (set {:first_name "first_name"
+             :last_name "last_name"
+             :email "email"})
+      (where [:= :id 1])
+      (sql/format {:pretty true}
+        ))
 
+  ;(jdbc/execute! ds ["select * from drugs"] {:timeout 5}) ; seconds
   ;(def config
   ;  {:classname "org.postgresql.Driver"
   ;   :subprotocal "postgresql"

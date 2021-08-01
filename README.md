@@ -56,9 +56,16 @@ step2
 - cannot continue with HugSQL, replaced by HoneySql
 - 初步建table與select query ok
 - insert ok
+- insert version2
+
+step3
+- query by id ok
+- update ok
 
 ## change log
-
+### 2021/7/31
+- insert version 2
+- query by id ok
 ### 2021/7/30
 - HoneySql insert ok
 
