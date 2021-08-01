@@ -7,16 +7,21 @@
             [reitit.ring.middleware.muuntaja :refer [format-negotiate-middleware
                                                      format-request-middleware
                                                      format-response-middleware]]
-            [muuntaja.core :as m]))
+            [muuntaja.core :as m]
+            [kevinmai-contactbook-intellij.db :as db]))
 
 (defonce server (atom nil))
 
 (def app
   (ring/ring-handler
     (ring/router
-      [["/api" {:get (fn [req]
+      [["/api"
+        ["/ping" {:get (fn [req]
                        {:status 200
-                        :body   {:hello "world2"}})}]]
+                        :body {:ping "pong"}})}]
+        ["/contacts" {:get (fn [req]
+                             {:status 200
+                              :body (db/get-contacts db/config)})}]]]
       {:data {:muutaja    m/instance
               :middleware [format-negotiate-middleware
                            format-response-middleware
@@ -50,7 +55,9 @@
   @server
   (-main)
   (app {:request-method :get
-        :uri            "/api2"})
+        :uri "/api/ping"})
+  (app {:request-method :get
+        :uri "/api/contacts"})
   )
 
 ;

@@ -62,10 +62,18 @@ step3
 - query by id ok
 - update ok
 
+step4
+- api update
+- delete ok
+
 ## change log
+### 2021/8/1
+- api update
+- delete ok
 ### 2021/7/31
 - insert version 2
 - query by id ok
+
 ### 2021/7/30
 - HoneySql insert ok
 
