@@ -1,14 +1,18 @@
-;(ns contacts.core)
-
-(ns kevinmai-contactbook-intellij.core
+(ns contacts.core
   (:require [org.httpkit.server :refer [run-server]]
             [reitit.ring :as ring]
             [reitit.ring.middleware.exception :refer [exception-middleware]]
+            [reitit.ring.middleware.parameters :refer [parameters-middleware]]
             [reitit.ring.middleware.muuntaja :refer [format-negotiate-middleware
                                                      format-request-middleware
                                                      format-response-middleware]]
+            [reitit.ring.coercion :refer [coerce-exceptions-middleware
+                                          coerce-request-middleware
+                                          coerce-response-middleware]]
+            [reitit.coercion.schema]
             [muuntaja.core :as m]
-            [kevinmai-contactbook-intellij.db :as db]))
+            [kevinmai-contactbook-intellij.db :as db]
+            [kevinmai-contactbook-intellij.routes :refer [ping-routes contact-routes]]))
 
 (defonce server (atom nil))
 
@@ -16,17 +20,18 @@
   (ring/ring-handler
     (ring/router
       [["/api"
-        ["/ping" {:get (fn [req]
-                       {:status 200
-                        :body {:ping "pong"}})}]
-        ["/contacts" {:get (fn [req]
-                             {:status 200
-                              :body (db/get-contacts db/config)})}]]]
-      {:data {:muutaja    m/instance
-              :middleware [format-negotiate-middleware
+        ping-routes
+        contact-routes]]
+      {:data {:coercion reitit.coercion.schema/coercion
+              :muutaja    m/instance
+              :middleware [parameters-middleware
+                           format-negotiate-middleware
                            format-response-middleware
                            exception-middleware
-                           format-request-middleware]}})
+                           format-request-middleware
+                           coerce-exceptions-middleware
+                           coerce-request-middleware
+                           coerce-response-middleware]}})
     (ring/routes
       (ring/redirect-trailing-slash-handler)
       (ring/create-default-handler

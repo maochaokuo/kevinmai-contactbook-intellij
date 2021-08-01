@@ -1,4 +1,4 @@
-(ns kevinmai-contactbook-intellij.db
+(ns contacts.db
   (:require ;[hugsql :as hugsql]
             [honey.sql :as sql]
             [honey.sql.helpers :refer :all :as h]

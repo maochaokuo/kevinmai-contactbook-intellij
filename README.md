@@ -66,10 +66,23 @@ step4
 - api update
 - delete ok
 
+## [3] API Endpoints
+step1
+- type in all the source code
+
+## open issues
+1. may need to go through HugSQL again
+2. insert parameters, make consistent with the original, and figure it
+   out
+
 ## change log
 ### 2021/8/1
 - api update
 - delete ok
+
+[3] API Endpoints
+
+- type in all the source code  
 ### 2021/7/31
 - insert version 2
 - query by id ok
@@ -78,7 +91,9 @@ step4
 - HoneySql insert ok
 
 ### 2021/7/28
+
 [2] HugSQL replaced by HoneySql
+
 初步建table與select query ok
 
 ### 2021/7/14
