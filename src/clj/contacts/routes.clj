@@ -11,9 +11,9 @@
                    {:status 200
                     :body   {:ping "pong"}})}])
 
-;(defn dummy [req]
-;  {:status 200
-;   :body {:ping "pong"}})
+(defn dummy [req]
+  {:status 200
+   :body {:ping "pong"}})
 
 (def contact-routes
   ["/contacts"

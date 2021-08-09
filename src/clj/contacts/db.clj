@@ -6,7 +6,7 @@
 
 ;; connectTimeout / socketTimeout via db-spec:
 (def config {:dbtype      "postgres" :dbname "postgres" :user "postgres"
-         :password        "root"          ;; milliseconds:
+         :password        "postgres"          ;; milliseconds:
           :connectTimeout 60000 :socketTimeout 30000})
 
 (def ds (jdbc/get-datasource config))
@@ -91,7 +91,7 @@
     (jdbc/execute! ds sql)
     ))
 
-(defn update-contact [config id first_name last_name email]
+(defn update-contact-by-id [config id first_name last_name email]
   (let [sql (-> (h/update :contacts)
                 (set {:first_name first_name
                       :last_name last_name
@@ -102,7 +102,7 @@
     (jdbc/execute! (jdbc/get-datasource config) sql)
     ))
 
-(defn delete-contact [config id]
+(defn delete-contact-by-id [config id]
   (let [sql (-> (delete-from :contacts)
                 (where [:= :id id])
                 (sql/format))]
@@ -113,10 +113,10 @@
   (create-contacts-table )
   (get-contacts0)
   (get-contacts config)
-  (create-contact0a "Kevin2" "Mai2" "kevin2.mai@email.com"
+  (create-contact0a "Kevin" "Mai" "kevin.mai@email.com"
     ;[{:first_name "Kevin" :last_name "Mai" :email "kevin.mai@email.com"}]
     )
-  (create-contact config "'Kevin4', 'Mai4', 'kevin4.mai@email.com'" )
+  (create-contact config "'Kevin2', 'Mai2', 'kevin2.mai@email.com'" )
   (get-contact-by-id config 4)
   (update-contact config 4 "Kevin4b" "Mai4b" "kevin4b.mai@email.com")
   (delete-contact config 2)
@@ -135,15 +135,6 @@
       (sql/format {:pretty true}
         ))
 
-  (comment
-    (-> (h/update :contacts)
-        (set {:first_name "first_name"
-              :last_name "last_name"
-              :email "email"})
-        (where [:= :id 1])
-        (sql/format {:pretty true}
-                    ))
-    )
   ;(defn aaa [p1 p2]
   ;  (print p1)
   ;  (print p2))
@@ -160,4 +151,39 @@
   ;   })
   ;(hugsql/def-db-fns "contacts.sql")
   ;(create-contacts-table config)
+  )
+
+(defn insertest [{:keys [parameters]}]
+  (let [data (:body parameters)
+        first-name (:first-name data)
+        last-name (:last-name data)
+        email (:email data)
+        ]
+    (println first-name "," last-name "," email)
+    (println data)
+    (println parameters)
+    ))
+(defn itest1 [& {:keys [parameters] :as opts}]
+  (println parameters)
+  (println opts)
+  )
+(defn destr [& {:keys [a b] :as opts}]
+  [a b opts])
+(comment
+  (destr :a 1)
+  (destr {:a 1 :b 2})
+  (itest1 {:parameters 123})
+  (itest1 [{:first-name "Kevin"
+           :last-name "Mai"
+           :email "kevin.mai@email.com"}])
+  (insertest  {:first-name "Kevin"
+              :last-name "Mai"
+              :email "kevin.mai@email.com"})
+  (-> (h/update :contacts)
+      (set {:first_name "first_name"
+            :last_name "last_name"
+            :email "email"})
+      (where [:= :id 1])
+      (sql/format {:pretty true}
+                  ))
   )

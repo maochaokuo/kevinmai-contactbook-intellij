@@ -52,6 +52,25 @@ step1
 - add db.clj
 - add resources/contacts.sql
 
+### make up docker for postgresql
+when docker-compose.yml added, run in terminal:
+```shell
+docker-compose up -d
+```
+
+then after db.clj and resources/contacts.sql created, run, in this tutorial
+```shell
+docker exec -it clj_contacts_db psql -U postgres
+```
+
+if something wrong then make up the followings
+```shell
+docker pull postgres
+docker run postgres
+#or
+docker run -e POSTGRES_PASSWORD=postgres postgres
+```
+
 step2
 - cannot continue with HugSQL, replaced by HoneySql
 - 初步建table與select query ok
@@ -76,6 +95,14 @@ step1
    out
 
 ## change log
+### 2021/8/9
+以下不錯試試，看來露出一線曙光
+
+[https://tutswiki.com/rest-api-in-clojure/](https://tutswiki.com/rest-api-in-clojure/)
+[https://github.com/metosin/compojure-api](https://github.com/metosin/compojure-api)
+[https://www.codementor.io/@tamizhvendan/developing-restful-apis-in-clojure-using-compojure-api-and-toucan-part-1-oc6yzsigc](https://www.codementor.io/@tamizhvendan/developing-restful-apis-in-clojure-using-compojure-api-and-toucan-part-1-oc6yzsigc)
+[https://stackoverflow.com/questions/49471912/ring-and-compojure-post-requests-with-content-type-application-json-does-not-w](https://stackoverflow.com/questions/49471912/ring-and-compojure-post-requests-with-content-type-application-json-does-not-w)
+[https://www.demystifyfp.com/clojure/blog/restful-crud-apis-using-compojure-api-and-toucan-part-2/](https://www.demystifyfp.com/clojure/blog/restful-crud-apis-using-compojure-api-and-toucan-part-2/)
 ### 2021/8/1
 - api update
 - delete ok

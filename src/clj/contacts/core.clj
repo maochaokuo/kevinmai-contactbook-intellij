@@ -11,8 +11,8 @@
                                           coerce-response-middleware]]
             [reitit.coercion.schema]
             [muuntaja.core :as m]
-            [kevinmai-contactbook-intellij.db :as db]
-            [kevinmai-contactbook-intellij.routes :refer [ping-routes contact-routes]]))
+            [contacts.db :as db]
+            [contacts.routes :refer [ping-routes contact-routes]]))
 
 (defonce server (atom nil))
 
