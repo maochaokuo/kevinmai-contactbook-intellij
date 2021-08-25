@@ -16,6 +16,7 @@
     <orderEntry type="library" name="Leiningen: borkdude/edamame:0.0.6" level="project" />
     <orderEntry type="library" name="Leiningen: borkdude/sci:0.0.11-alpha.2" level="project" />
     <orderEntry type="library" name="Leiningen: camel-snake-kebab:0.4.2" level="project" />
+    <orderEntry type="library" name="Leiningen: cheshire:5.9.0" level="project" />
     <orderEntry type="library" name="Leiningen: clj-time:0.10.0" level="project" />
     <orderEntry type="library" name="Leiningen: clojure-complete:0.2.5" level="project" />
     <orderEntry type="library" name="Leiningen: com.andrewmcveigh/cljs-time:0.5.1" level="project" />
@@ -25,6 +26,8 @@
     <orderEntry type="library" name="Leiningen: com.fasterxml.jackson.core/jackson-annotations:2.11.0" level="project" />
     <orderEntry type="library" name="Leiningen: com.fasterxml.jackson.core/jackson-core:2.11.0" level="project" />
     <orderEntry type="library" name="Leiningen: com.fasterxml.jackson.core/jackson-databind:2.11.0" level="project" />
+    <orderEntry type="library" name="Leiningen: com.fasterxml.jackson.dataformat/jackson-dataformat-cbor:2.9.9" level="project" />
+    <orderEntry type="library" name="Leiningen: com.fasterxml.jackson.dataformat/jackson-dataformat-smile:2.9.9" level="project" />
     <orderEntry type="library" name="Leiningen: com.fasterxml.jackson.datatype/jackson-datatype-jsr310:2.11.0" level="project" />
     <orderEntry type="library" name="Leiningen: com.gfredericks/test.chuck:0.2.10" level="project" />
     <orderEntry type="library" name="Leiningen: com.github.seancorfield/honeysql:2.0.0-rc5" level="project" />
@@ -87,5 +90,6 @@
     <orderEntry type="library" name="Leiningen: ring/ring-codec:1.1.2" level="project" />
     <orderEntry type="library" name="Leiningen: ring/ring-core:1.8.1" level="project" />
     <orderEntry type="library" name="Leiningen: tech.droit/clj-diff:1.0.1" level="project" />
+    <orderEntry type="library" name="Leiningen: tigris:0.1.1" level="project" />
   </component>
 </module>

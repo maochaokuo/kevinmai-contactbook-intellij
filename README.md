@@ -93,6 +93,13 @@ step1
 1. may need to go through HugSQL again
 2. insert parameters, make consistent with the original, and figure it
    out
+   
+### post request to string 
+```clojure
+(POST "/agents" request
+  (let [body (json/read-str (slurp (:body request)))]
+    (println body)))
+```
 
 ## change log
 ### 2021/8/9
@@ -102,6 +109,7 @@ step1
 [https://github.com/metosin/compojure-api](https://github.com/metosin/compojure-api)
 [https://www.codementor.io/@tamizhvendan/developing-restful-apis-in-clojure-using-compojure-api-and-toucan-part-1-oc6yzsigc](https://www.codementor.io/@tamizhvendan/developing-restful-apis-in-clojure-using-compojure-api-and-toucan-part-1-oc6yzsigc)
 [https://stackoverflow.com/questions/49471912/ring-and-compojure-post-requests-with-content-type-application-json-does-not-w](https://stackoverflow.com/questions/49471912/ring-and-compojure-post-requests-with-content-type-application-json-does-not-w)
+[https://www.demystifyfp.com/clojure/blog/restful-crud-apis-using-compojure-api-and-toucan-part-1/](https://www.demystifyfp.com/clojure/blog/restful-crud-apis-using-compojure-api-and-toucan-part-1/)
 [https://www.demystifyfp.com/clojure/blog/restful-crud-apis-using-compojure-api-and-toucan-part-2/](https://www.demystifyfp.com/clojure/blog/restful-crud-apis-using-compojure-api-and-toucan-part-2/)
 ### 2021/8/1
 - api update

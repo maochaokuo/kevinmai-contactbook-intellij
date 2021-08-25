@@ -1,21 +1,33 @@
 (ns contacts.contacts
-  (:require [contacts.db :as db]))
+  (:require [contacts.db :as db]
+            [cheshire.core :as json]))
 
 (defn get-contacts
   [_] ;req]
   {:status 200
    :body (db/get-contacts db/config)})
 
+(defn request-body->map
+  [request]
+  (-> request
+      :body
+      slurp
+      (json/parse-string true)))
+
 (defn create-contact
   [{:keys [parameters]}]
-  (let [data (:body parameters)
+  (let [;data (:body parameters)
+        response (:parameters (request-body->map parameters))
+        ;first-name (:first-name parameters);data)
         ;created-id (db/insert-contact db/config data)
         ]
-    (println :keys)
-    (println parameters)
-    (println :body)
+    ;(println :keys)
+    (println response)
+    ;(println :body)
     {:status 201
-     :body "" ; (db/get-contact-by-id db/config created-id)
+     :body (json/encode {:json true
+                         :response response})
+        ;"parameters" ;first-name ;"" ; (db/get-contact-by-id db/config created-id)
      })
   )
 
