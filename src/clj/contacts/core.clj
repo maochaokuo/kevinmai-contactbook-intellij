@@ -40,7 +40,7 @@
       )))
 
 (defn -main []
-  (println "Server started")
+  (println "Server started port 4004")
   (reset! server (run-server app {:port 4004})))
 
 (defn stop-server []

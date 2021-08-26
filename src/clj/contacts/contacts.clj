@@ -13,6 +13,7 @@
       :body
       slurp
       (json/parse-string true)))
+;;(json/parse-string (slurp (:body request)) true)
 
 (defn create-contact
   [{:keys [parameters]}]

@@ -93,6 +93,7 @@ step1
 1. may need to go through HugSQL again
 2. insert parameters, make consistent with the original, and figure it
    out
+3. 浪費這麼久的結論，得放棄HugSQL, 放棄ring/router, 改用HoneySQL與compojure   
    
 ### post request to string 
 ```clojure
@@ -102,6 +103,8 @@ step1
 ```
 
 ## change log
+### 2021/8/26
+- 浪費這麼久的結論，得放棄HugSQL, 放棄ring/router, 改用HoneySQL與compojure
 ### 2021/8/9
 以下不錯試試，看來露出一線曙光
 
