@@ -1,20 +1,60 @@
 (ns contacts.core
-  (:require [org.httpkit.server :refer [run-server]]
-            [reitit.ring :as ring]
-            [reitit.ring.middleware.exception :refer [exception-middleware]]
-            [reitit.ring.middleware.parameters :refer [parameters-middleware]]
-            [reitit.ring.middleware.muuntaja :refer [format-negotiate-middleware
-                                                     format-request-middleware
-                                                     format-response-middleware]]
-            [reitit.ring.coercion :refer [coerce-exceptions-middleware
-                                          coerce-request-middleware
-                                          coerce-response-middleware]]
-            [reitit.coercion.schema]
-            [muuntaja.core :as m]
-            [contacts.db :as db]
-            [contacts.routes :refer [ping-routes contact-routes]]))
+  (:require [compojure.core :refer [defroutes GET POST context]]
+            [compojure.route :as route]
+            [org.httpkit.server :refer [run-server]]
+            ;[reitit.ring :as ring]
+            ;[reitit.ring.middleware.exception :refer [exception-middleware]]
+            ;[reitit.ring.middleware.parameters :refer [parameters-middleware]]
+            ;[reitit.ring.middleware.muuntaja :refer [format-negotiate-middleware
+            ;                                         format-request-middleware
+            ;                                         format-response-middleware]]
+            ;[reitit.ring.coercion :refer [coerce-exceptions-middleware
+            ;                              coerce-request-middleware
+            ;                              coerce-response-middleware]]
+            ;[reitit.coercion.schema]
+            ;[muuntaja.core :as m]
+            ;[contacts.db :as db]
+            ;[contacts.routes :refer [ping-routes contact-routes]]
+            [cheshire.core :as json]))
+
+(defn request-body->map
+  [request]
+  (-> request
+      :body
+      slurp
+      (json/parse-string true)))
+;;(json/parse-string (slurp (:body request)) true)
 
 (defonce server (atom nil))
+
+(defroutes app
+     (GET "/" []
+       ;"Hello world"
+       {:status 200
+        :headers {"Content-Type" "application/json"}
+        :body (json/encode {:hello "world"})
+        }
+       )
+     (context "/api" []
+       ping-routes
+       (GET "/" []
+         {:status 200
+          :headers {"Content-Type" "application/json"}
+          :body (json/encode {:json true})})
+       (GET "/:id" [id]
+         {:status 200
+          :headers {"Content-Type" "application/json"}
+          :body (json/encode {:json true
+                              :id id})})
+       (POST "/" request
+         (let [response (:request (request-body->map request))]
+           (println response)
+           {:status 200
+            :headers {"Content-Type" "application/json"}
+            :body (json/encode {:json true
+                                :response response})}))
+       )
+     (route/not-found "Not Found"))
 
 (def app
   (ring/ring-handler

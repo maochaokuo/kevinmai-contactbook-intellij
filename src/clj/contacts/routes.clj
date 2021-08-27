@@ -7,13 +7,31 @@
                                delete-contact]]))
 
 (def ping-routes
-  ["/ping" {:get (fn [req]
-                   {:status 200
-                    :body   {:ping "pong"}})}])
+  (GET "/ping" []
+       {:status 200
+        ;:headers {"Content-Type" "application/json"}
+        :body {:ping "pong"}}))
+
+;(def ping-routes
+;  ["/ping" {:get (fn [req]
+;                   {:status 200
+;                    :body   {:ping "pong"}})}])
 
 (defn dummy [req]
   {:status 200
    :body {:ping "pong"}})
+
+(def contact-routes
+  (context "/contacts" []
+           (GET "/" [] get-contacts)
+           (POST "/" request
+                 (let [response (:request (request-body->map request))]
+                   (println response)
+                   (create-contact request)
+                   {:status 200
+                    :headers {"Content-Type" "application/json"}
+                    :body (json/encode {:json true?
+                                        :response response})}))))
 
 (def contact-routes
   ["/contacts"
