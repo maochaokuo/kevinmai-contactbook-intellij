@@ -28,56 +28,58 @@
 (defonce server (atom nil))
 
 (defroutes app
-     (GET "/" []
-       ;"Hello world"
-       {:status 200
-        :headers {"Content-Type" "application/json"}
-        :body (json/encode {:hello "world"})
-        }
-       )
-     (context "/api" []
-       ping-routes
-       (GET "/" []
-         {:status 200
-          :headers {"Content-Type" "application/json"}
-          :body (json/encode {:json true})})
-       (GET "/:id" [id]
-         {:status 200
-          :headers {"Content-Type" "application/json"}
-          :body (json/encode {:json true
-                              :id id})})
-       (POST "/" request
-         (let [response (:request (request-body->map request))]
-           (println response)
-           {:status 200
-            :headers {"Content-Type" "application/json"}
-            :body (json/encode {:json true
-                                :response response})}))
-       )
-     (route/not-found "Not Found"))
+   (GET "/" []
+     ;"Hello world"
+     {:status 200
+      :headers {"Content-Type" "application/json"}
+      :body (json/encode {:hello "world"})
+      }
+     )
+   (context "/api" []
+     ping-routes
+     contact-routes
+     ;(GET "/" []
+     ;  {:status 200
+     ;   :headers {"Content-Type" "application/json"}
+     ;   :body (json/encode {:json true})})
+     ;(GET "/:id" [id]
+     ;  {:status 200
+     ;   :headers {"Content-Type" "application/json"}
+     ;   :body (json/encode {:json true
+     ;                       :id id})})
+     ;(POST "/" request
+     ;  (let [response (:request (request-body->map request))]
+     ;    (println response)
+     ;    {:status 200
+     ;     :headers {"Content-Type" "application/json"}
+     ;     :body (json/encode {:json true
+     ;                         :response response})}))
+     )
+   (route/not-found "Not Found")
+)
 
-(def app
-  (ring/ring-handler
-    (ring/router
-      [["/api"
-        ping-routes
-        contact-routes]]
-      {:data {:coercion reitit.coercion.schema/coercion
-              :muutaja    m/instance
-              :middleware [parameters-middleware
-                           format-negotiate-middleware
-                           format-response-middleware
-                           exception-middleware
-                           format-request-middleware
-                           coerce-exceptions-middleware
-                           coerce-request-middleware
-                           coerce-response-middleware]}})
-    (ring/routes
-      (ring/redirect-trailing-slash-handler)
-      (ring/create-default-handler
-        {:not-found (constantly {:status 404
-                                 :body   "Route not found"})})
-      )))
+;(def app
+;  (ring/ring-handler
+;    (ring/router
+;      [["/api"
+;        ping-routes
+;        contact-routes]]
+;      {:data {:coercion reitit.coercion.schema/coercion
+;              :muutaja    m/instance
+;              :middleware [parameters-middleware
+;                           format-negotiate-middleware
+;                           format-response-middleware
+;                           exception-middleware
+;                           format-request-middleware
+;                           coerce-exceptions-middleware
+;                           coerce-request-middleware
+;                           coerce-response-middleware]}})
+;    (ring/routes
+;      (ring/redirect-trailing-slash-handler)
+;      (ring/create-default-handler
+;        {:not-found (constantly {:status 404
+;                                 :body   "Route not found"})})
+;      )))
 
 (defn -main []
   (println "Server started port 4004")
