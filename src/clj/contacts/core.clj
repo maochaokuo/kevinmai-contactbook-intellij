@@ -14,7 +14,7 @@
             ;[reitit.coercion.schema]
             ;[muuntaja.core :as m]
             ;[contacts.db :as db]
-            ;[contacts.routes :refer [ping-routes contact-routes]]
+            [contacts.routes :refer [ping-routes contact-routes]]
             [cheshire.core :as json]))
 
 (defn request-body->map

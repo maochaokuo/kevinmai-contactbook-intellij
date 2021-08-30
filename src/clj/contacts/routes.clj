@@ -7,7 +7,16 @@
                                        get-contact-by-id
                                        update-contact
                                        delete-contact]]
+            [cheshire.core :as json]
             ))
+
+(defn request-body->map
+  [request]
+  (-> request
+      ;:body
+      slurp
+      (json/parse-string true)))
+;;(json/parse-string (slurp (:body request)) true)
 
 (def ping-routes
   (GET "/ping" []
@@ -28,15 +37,22 @@
   (context "/contacts" [] (defroutes contacts-routes
    (GET "/" [] get-contacts)
    (POST "/" request
-         (let [response (:request (request-body->map request))]
-           (println response)
-           (create-contact request)
+         ;[{:keys [request]}]
+         (let [body (:body request)]
+           ;[bodyS (request-body->map body)]
+           (println (request-body->map body))
+           ;(create-contact body)
            {:status 200
             :headers {"Content-Type" "application/json"}
-            :body (json/encode {:json true?
-                                :response response})}))
+            :body {:post "received"}
+            ;(json/encode {:json true?
+            ;                    :response
+            ;                        ;(request-body->map body)
+            ;                        body
+            ;                    })
+            }))
    (context "/:id" [id] (defroutes contact-routes
-     (GET "/" [] get-contact id)
+     (GET "/" [] get-contact-by-id id)
      (PUT "/" {body :body} update-contact id body)
      (DELETE "/" [] (delete-contact id))
      ))
