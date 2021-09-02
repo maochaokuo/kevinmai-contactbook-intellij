@@ -103,8 +103,13 @@ step1
 ```
 
 ## change log
+### 2021/9/2
+- 終於可以呼叫到資料庫異動了，取欄位怪怪的，再研究。有進步了。ya!
+  可以繼續kevin mai的冗長的範例了
+
 ### 2021/8/26
 - 浪費這麼久的結論，得放棄HugSQL, 放棄ring/router, 改用HoneySQL與compojure
+
 ### 2021/8/9
 以下不錯試試，看來露出一線曙光
 
@@ -114,6 +119,7 @@ step1
 [https://stackoverflow.com/questions/49471912/ring-and-compojure-post-requests-with-content-type-application-json-does-not-w](https://stackoverflow.com/questions/49471912/ring-and-compojure-post-requests-with-content-type-application-json-does-not-w)
 [https://www.demystifyfp.com/clojure/blog/restful-crud-apis-using-compojure-api-and-toucan-part-1/](https://www.demystifyfp.com/clojure/blog/restful-crud-apis-using-compojure-api-and-toucan-part-1/)
 [https://www.demystifyfp.com/clojure/blog/restful-crud-apis-using-compojure-api-and-toucan-part-2/](https://www.demystifyfp.com/clojure/blog/restful-crud-apis-using-compojure-api-and-toucan-part-2/)
+
 ### 2021/8/1
 - api update
 - delete ok

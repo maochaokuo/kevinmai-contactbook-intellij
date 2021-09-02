@@ -36,21 +36,27 @@
 (def contact-routes
   (context "/contacts" [] (defroutes contacts-routes
    (GET "/" [] get-contacts)
-   (POST "/" request
+   (POST "/" {body :body} ;request
          ;[{:keys [request]}]
-         (let [body (:body request)]
+         (let
+           ;[body (:body request)]
+           [bodys (slurp body)]
+           ;[first-name (:first-name body)]
            ;[bodyS (request-body->map body)]
+           (println bodys)
            (println (request-body->map body))
-           ;(create-contact body)
-           {:status 200
-            :headers {"Content-Type" "application/json"}
-            :body {:post "received"}
-            ;(json/encode {:json true?
-            ;                    :response
-            ;                        ;(request-body->map body)
-            ;                        body
-            ;                    })
-            }))
+           ;(println first-name)
+           (create-contact body)
+           ;{:status 200
+           ; :headers {"Content-Type" "application/json"}
+           ; :body {:post "received"}
+           ; ;(json/encode {:json true?
+           ; ;                    :response
+           ; ;                        ;(request-body->map body)
+           ; ;                        body
+           ; ;                    })
+           ; }
+           ))
    (context "/:id" [id] (defroutes contact-routes
      (GET "/" [] get-contact-by-id id)
      (PUT "/" {body :body} update-contact id body)

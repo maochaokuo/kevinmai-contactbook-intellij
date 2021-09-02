@@ -10,24 +10,26 @@
 (defn request-body->map
   [request]
   (-> request
-      :body
+      ;:body
       slurp
       (json/parse-string true)))
 ;;(json/parse-string (slurp (:body request)) true)
 
-(defn create-contact
-  [{:keys [parameters]}]
-  (let [;data (:body parameters)
-        response (:parameters (request-body->map parameters))
-        ;first-name (:first-name parameters);data)
+(defn create-contact [parameters] ;  [{:keys [parameters]}]
+  (let [first-name (:first-name parameters)
+        last-name (:last-name parameters)
+        email (:email parameters)
         ;created-id (db/insert-contact db/config data)
         ]
-    ;(println :keys)
-    (println response)
-    ;(println :body)
+    (println first-name)
+    (println last-name)
+    (println email)
+    (println parameters)
     {:status 201
      :body (json/encode {:json true
-                         :response response})
+                         :response "parameters"
+                         ;[parameters] ;response
+                         })
         ;"parameters" ;first-name ;"" ; (db/get-contact-by-id db/config created-id)
      })
   )
