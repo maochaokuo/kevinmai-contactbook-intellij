@@ -16,6 +16,7 @@
 ;;(json/parse-string (slurp (:body request)) true)
 
 (defn create-contact [parameters] ;  [{:keys [parameters]}]
+  ; 這裡的parameters同post中的body, 所以先解決怎麼拆分內容，或直接丟給insert
   (let [first-name (:first-name parameters)
         last-name (:last-name parameters)
         email (:email parameters)
@@ -24,7 +25,7 @@
     (println first-name)
     (println last-name)
     (println email)
-    (println parameters)
+    (println (slurp parameters))
     {:status 201
      :body (json/encode {:json true
                          :response "parameters"
