@@ -40,9 +40,11 @@
          ;[{:keys [request]}]
          (let
            ;[body (:body request)]
-           [bodys (slurp body)]
+           [bodys (slurp body)
+            tmpa (request-body->map body)]
            ;[first-name (:first-name body)]
            ;[bodyS (request-body->map body)]
+           (println body)
            (println bodys)
            (println (request-body->map body))
            ;(println first-name)

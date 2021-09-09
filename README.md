@@ -103,8 +103,12 @@ step1
 ```
 
 ## change log
+
 ### 2021/9/8
 - 這裡的parameters同post中的body, 所以先解決怎麼拆分內容，或直接丟給insert
+- 所以跟clojure-rest專案不同，這裡body會變成
+  org.httpkit.BytesInputStream，無法解析
+
 ### 2021/9/2
 - 終於可以呼叫到資料庫異動了，取欄位怪怪的，再研究。有進步了。ya!
   可以繼續kevin mai的冗長的範例了
